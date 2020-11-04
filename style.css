@@ -1,0 +1,23 @@
+.container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.board {
+    display: grid;
+    width: 399px;
+    height: 399px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-areas: "a b c" "d e f" "g h i";
+    text-align: center;
+    justify-self: center;
+    font-size: 40px;
+    gap: 3px;
+}
+
+.cell {
+    border: 2px solid black;
+    background: white;
+}
