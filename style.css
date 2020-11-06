@@ -3,7 +3,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: azure;
 }
+
 .board {
     display: grid;
     width: 399px;
@@ -17,7 +19,14 @@
     gap: 3px;
 }
 
+@media (max-width: 550px) {
+    .board {
+        height: 330px !important;
+        width: 330px !important;
+    }
+}
+
 .cell {
     border: 2px solid black;
-    background: white;
+    background: transparent;
 }

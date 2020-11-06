@@ -71,56 +71,56 @@ const Game = (() => {
         const selectCell = () => {
             let bestScore = -Infinity;
             let bestMove;
-            let openCells = [];
-            //let currBoard = GameBoard.getBoard();
+
             for (let i = 0; i < 9; i++) {
-                if (GameBoard.checkCell(i) == "") openCells.push(i);
-            }
-            for (let i of openCells) {
-                const gameboard = GameBoard.getBoard();
-                gameboard[i] = symbol;
-                let score = minimax(gameboard, 0, false);
-                gameboard[i] = "";
-                if (score > bestScore) {
-                    bestScore = score;
-                    bestMove = i;
+                if (GameBoard.checkCell(i) == "") {
+                    const gameboard = GameBoard.getBoard();
+                    gameboard[i] = "O";
+                    let score = minimax(gameboard, 0, false);
+                    gameboard[i] = "";
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestMove = i;
+                    }
                 }
             }
-            //console.log(currBoard);
-            //GameBoard.checkWin(currBoard);
-            //GameBoard.checkTie(currBoard);
             makeChoice(bestMove);
         }
         function minimax(board, depth, isMaximizing) {
             let bestScore;
-            if (GameBoard.checkTie()) return 0;
-            let winner = GameBoard.checkWin();
-            if (winner === symbol) return 1;
-            else if (!!winner && winner !== symbol) return -1;
-
-            //let openCells = [];
-            for (let i = 0; i < 9; i++) {
-                if (GameBoard.checkCell(i) == "") {
-                    if (isMaximizing) {
-                        bestScore = -Infinity;
+            let winner = GameBoard.checkWin(board);
+            if (winner === "O") {
+                return 100 - depth;
+            }
+            else if (winner === "X") {
+                return -100 + depth;
+            } else if (GameBoard.checkTie(board)) {
+                return 0;
+            }
+            if (GameBoard.checkTie(board)) console.log("S");
+            if (isMaximizing) {
+                bestScore = -Infinity;
+                for (let i = 0; i < 9; i++) {
+                    if (board[i] === "") {
                         board[i] = "O";
                         let score = minimax(board, depth + 1, false);
                         board[i] = "";
-                        if (score > bestScore) {
-                            bestScore = score;
-                        }
-                    } else {
-                        bestScore = Infinity;
+                        bestScore = Math.max(score, bestScore);
+                    }
+                }
+                return bestScore;
+            } else {
+                bestScore = Infinity;
+                for (let i = 0; i < 9; i++) {
+                    if (board[i] === "") {
                         board[i] = "X";
                         let score = minimax(board, depth + 1, true);
                         board[i] = "";
-                        if (score < bestScore) {
-                            bestScore = score;
-                        }
+                        bestScore = Math.min(score, bestScore);
                     }
                 }
+                return bestScore;
             }
-            return bestScore;
         }
         return { getName, getSymbol, selectCell }
     };
@@ -130,7 +130,8 @@ const Game = (() => {
     const symbols = ["X", "O"];
     let currTurn = 0;
     const players = [];
-    players[0] = Player(prompt("Enter name"), symbols[0], true)
+    //players[0] = Player(prompt("Enter name"), symbols[0], true)
+    players[0] = Player("Player", symbols[0], true)
     if (playAi) {
         players[1] = Ai("O");
     } else {
