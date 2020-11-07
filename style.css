@@ -1,9 +1,14 @@
+html, body {
+    margin: 0px;
+}
+
 .container {
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: azure;
+    flex-direction: column;
 }
 
 .board {
@@ -29,4 +34,17 @@
 .cell {
     border: 2px solid black;
     background: transparent;
+}
+
+#start {
+    font-weight: bold;
+    font-size: 22px;
+    margin-top: 9px;
+    background: rgb(236, 182, 101);
+    width: 75px;
+    height: 25px;
+    line-height: 25px;
+    border-radius: 10%;
+    border: 1px solid black;
+    text-align: center;
 }

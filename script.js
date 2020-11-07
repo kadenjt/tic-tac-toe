@@ -1,8 +1,10 @@
 const GameBoard = (() => {
-    const gameBoard = ["", "", "", "", "", "", "", "", ""];
+    let gameBoard;
     const getBoard = () => gameBoard;
     const createBoard = () => {
+        gameBoard = ["", "", "", "", "", "", "", "", ""];
         const boardDisplay = document.querySelector(".board");
+        boardDisplay.innerHTML = "";
         for (let i = 0; i < 9; i++) {
             var cell = document.createElement("div");
             cell.className = "cell";
@@ -171,17 +173,13 @@ const Game = (() => {
             gameState = "ended";
         }
     }
-
-
-
-
-
-
     return { startGame, makeChoice }
 })();
 
-Game.startGame();
-
-const cells = Array.from(document.getElementsByClassName("cell"));
-cells.forEach(cell => cell.addEventListener("click", Game.makeChoice));
-
+function start() {
+    Game.startGame();
+    const cells = Array.from(document.getElementsByClassName("cell"));
+    cells.forEach(cell => cell.addEventListener("click", Game.makeChoice));
+    const startBtn = document.getElementById("start");
+    startBtn.textContent = "Restart";
+}
