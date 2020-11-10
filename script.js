@@ -86,7 +86,9 @@ const Game = (() => {
                     }
                 }
             }
-            makeChoice(bestMove);
+            setTimeout(function() {
+                makeChoice(bestMove);
+              }, 600);
         }
         function minimax(board, depth, isMaximizing) {
             let bestScore;
@@ -141,6 +143,11 @@ const Game = (() => {
     }
     const startGame = () => {
         GameBoard.createBoard();
+        const cells = Array.from(document.getElementsByClassName("cell"));
+        cells.forEach(cell => cell.addEventListener("click", Game.makeChoice));
+        const startBtn = document.getElementById("start");
+        startBtn.textContent = "Restart";
+        gameState = "playing"
     }
     function makeChoice(e) {
         let choice;
@@ -178,8 +185,4 @@ const Game = (() => {
 
 function start() {
     Game.startGame();
-    const cells = Array.from(document.getElementsByClassName("cell"));
-    cells.forEach(cell => cell.addEventListener("click", Game.makeChoice));
-    const startBtn = document.getElementById("start");
-    startBtn.textContent = "Restart";
 }
